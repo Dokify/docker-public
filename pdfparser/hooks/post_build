@@ -3,6 +3,6 @@
 set -x
 
 docker tag $IMAGE_NAME $DOCKER_REPO:$SOURCE_COMMIT
+docker tag $IMAGE_NAME $DOCKER_REPO:$(cat VERSION)
 docker push $DOCKER_REPO:$SOURCE_COMMIT
-
-exec make push
+docker push $DOCKER_REPO:$(cat VERSION)
