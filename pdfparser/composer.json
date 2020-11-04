@@ -1,0 +1,15 @@
+{
+    "repositories": [
+        {
+            "url": "https://github.com/Dokify/pdfparser",
+            "type": "git"
+        }
+    ],
+    "require": {
+        "smalot/pdfparser": "dev-ñapa"
+    },
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    }
+}
