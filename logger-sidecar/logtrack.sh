@@ -15,7 +15,7 @@ done
 inotifywait -q -r -m "/logs" -e create -e moved_to |
     while read dir action file; do
         filepath=$(readlink -fn $dir$file)
-        echo "The file '$file' appeared in directory '$dir' via '$action'"
+        #echo "The file '$file' appeared in directory '$dir' via '$action'"
         if [[ -f "$filepath" ]]
         then
             addTail n logs $filepath
