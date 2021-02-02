@@ -19,7 +19,6 @@ inotifywait -q -r -m "/logs" -e create -e moved_to |
         if [[ -f "$filepath" ]]
         then
             addTail n logs $filepath
-            echo "$filepath: $(cat $filepath)"
         fi
     done
 
