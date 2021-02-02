@@ -1,0 +1,9 @@
+#!/bin/sh
+
+filepath=$(readlink -fn $3)
+
+if [[ -f "$filepath" ]]
+then
+    (exec tail -F $filepath | sed "s~^~$filepath: ~" ) &
+    echo $! >> /tmp/pids
+fi
