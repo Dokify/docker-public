@@ -4,6 +4,6 @@ filepath=$(readlink -fn $3)
 
 if [[ -f "$filepath" ]]
 then
-    (exec tail -F $filepath |awk -v my_var=$filepath '$0=my_var": " $0') &
+    (exec tail -F $filepath) &
     echo $! >> /tmp/pids
 fi
