@@ -15,6 +15,9 @@ async def inject_annotation(spec, name, **kwargs):
             current = api.read_namespaced_deployment(name=name, namespace="kube-system")
             hasAnnotations = current.spec.template.metadata.annotations is not None
 
+            if not hasAnnotations:
+                current.spec.template.metadata.annotations = {}
+
             if not hasAnnotations or not "cluster-autoscaler.kubernetes.io/safe-to-evict" in current.spec.template.metadata.annotations:
                 print("Annotation is missing. Patching...")
                 current.spec.template.metadata.annotations['cluster-autoscaler.kubernetes.io/safe-to-evict'] = "true"
