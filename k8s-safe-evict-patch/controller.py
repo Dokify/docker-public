@@ -5,6 +5,7 @@ from kubernetes.client.rest import ApiException
 
 @kopf.on.update('apps/v1', 'deployments', labels={'k8s-app': 'event-exporter'})
 @kopf.on.update('apps/v1', 'deployments', labels={'app': 'stackdriver-metadata-agent'})
+@kopf.on.update('apps/v1', 'deployments', labels={'k8s-app': 'metrics-server'})
 async def inject_annotation(spec, name, **kwargs):
     lock = asyncio.Lock()
     async with lock:
