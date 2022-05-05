@@ -1,6 +1,6 @@
 FROM openresty/openresty:1.19.9.1-bionic
 
-RUN apt-get update && apt-get install -y vim libexpat1-dev nodejs && \
+RUN apt-get update && apt-get install -y vim libexpat1-dev nodejs jq && \
     cpan -T -i Test::Nginx \
         YAML::Tiny \
         XML::Parser \
