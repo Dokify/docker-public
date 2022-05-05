@@ -1,12 +1,12 @@
 FROM openresty/openresty:1.19.9.1-bionic
 
-RUN apt-get update && apt-get install -y vim libexpat1-dev && \
+RUN apt-get update && apt-get install -y vim libexpat1-dev nodejs && \
     cpan -T -i Test::Nginx \
         YAML::Tiny \
         XML::Parser \
         XML::SemanticDiff \
         Test::XML \
-	Test::Most \
+	    Test::Most \
         TAP::Harness::Archive \
         IPC::Run \
         TAP::Formatter:JUnit && \
