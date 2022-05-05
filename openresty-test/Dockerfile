@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y vim libexpat1-dev && \
         XML::Parser \
         XML::SemanticDiff \
         Test::XML \
+	Test::Most \
         TAP::Harness::Archive \
         IPC::Run \
         TAP::Formatter:JUnit && \
