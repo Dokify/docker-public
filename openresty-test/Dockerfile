@@ -1,6 +1,6 @@
 FROM openresty/openresty:1.19.9.1-bionic
 
-RUN apt-get update && apt-get install -y vim libexpat1-dev nodejs jq && \
+RUN apt-get update && apt-get install -y vim libexpat1-dev nodejs jq git && \
     cpan -T -i Test::Nginx \
         YAML::Tiny \
         XML::Parser \
@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y vim libexpat1-dev nodejs jq && \
         IPC::Run \
         TAP::Formatter:JUnit && \
     luarocks install lua-resty-openssl && \
+    luarocks install 3scale/lua-resty-url && \
     rm -rf /var/lib/apt/lists/*
 
 ENV PATH $PATH:/usr/local/openresty/nginx/sbin
