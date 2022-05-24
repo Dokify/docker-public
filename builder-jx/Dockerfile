@@ -15,6 +15,9 @@ RUN cd /tmp && \
     wget https://downloads.percona.com/downloads/Percona-Server-5.7/Percona-Server-5.7.36-39/binary/tarball/Percona-Server-5.7.36-39-Linux.x86_64.glibc2.12-minimal.tar.gz -O percona.tar.gz && \
     yum update -y && \
     yum install -y pigz* libaio.x86_64 numactl && \
+    yum install -y centos-release-scl && \
+    yum install -y rh-ruby27 which && \
+    scl enable rh-ruby27 bash && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     cd /tmp/ && \
