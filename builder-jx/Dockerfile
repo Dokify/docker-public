@@ -11,4 +11,13 @@ RUN cd /tmp && \
     unzip vault_1.9.0_linux_amd64.zip && \
     chmod +x ./vault && \
     mv vault /usr/local/bin/ && \
+    cd /usr/src && \
+    wget https://downloads.percona.com/downloads/Percona-Server-5.7/Percona-Server-5.7.36-39/binary/tarball/Percona-Server-5.7.36-39-Linux.x86_64.glibc2.12-minimal.tar.gz -O percona.tar.gz && \
+    yum update -y && \
+    yum install -y pigz* libaio.x86_64 numactl && \
+    yum clean all && \
+    rm -rf /var/cache/yum && \
+    cd /tmp/ && \
+    curl -sSL get.dbsake.net > /usr/local/bin/dbsake && \
+    chmod +x /usr/local/bin/dbsake && \
     rm -rf /tmp/*
