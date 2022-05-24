@@ -18,9 +18,13 @@ RUN cd /tmp && \
     yum install -y centos-release-scl && \
     yum install -y rh-ruby27 which && \
     scl enable rh-ruby27 bash && \
+    source /opt/rh/rh-ruby27/enable && \
+    export X_SCLS="`scl enable rh-ruby27 'echo $X_SCLS'`" && \
+    gem install jwt && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     cd /tmp/ && \
     curl -sSL get.dbsake.net > /usr/local/bin/dbsake && \
     chmod +x /usr/local/bin/dbsake && \
     rm -rf /tmp/*
+
