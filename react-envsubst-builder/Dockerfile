@@ -14,8 +14,7 @@ ONBUILD RUN (rm .env*|| true) && grep -R "process.env." src| \
         awk -F '.' '{print $3"=\"${"$3"}\""}'| \
         tee .env.template >/dev/null
 
-ONBUILD RUN npm --location=global install env-cmd && \
-            env-cmd -f .env.template --use-shell yarn run react-scripts build && \
+ONBUILD RUN export $(grep -v '^#' .env.template | xargs) && yarn run react-scripts build && \
             grep -R "process.env." src|sed 's/^.*\(process.env.[a-zA-Z_0-9]*\).*$/\1/'| \
             egrep -v 'PUBLIC_URL'| \
             sort|uniq|awk -F '.' '{print "$"$3","}'|xargs|sed "s/ //g" | tee .env.list >/dev/null
