@@ -14,8 +14,15 @@ ONBUILD COPY package.json *package-lock.json *.npmrc yarn.lock *.nvmrc ./
 ONBUILD ARG NODE_ENV=${NODE_ENV:-production}
 ONBUILD ENV NODE_ENV ${NODE_ENV}
 
-ONBUILD ARG YARN_INSTALL_ARGS=${YARN_INSTALL_ARGS:-"--network-concurrency 1 --production --frozen-lockfile"}
+ONBUILD RUN mkdir node_modules 2>/dev/null && \
+            touch ./node_modules/.metadata_never_index
 
-ONBUILD RUN if [ -f yarn.lock ]; then yarn install ${YARN_INSTALL_ARGS}; else npm install; fi
+ONBUILD RUN yarn install --skip-integrity-check \
+            --non-interactive \
+            --no-node-version-check \
+            --production \
+            --ignore-platform \
+            --network-concurrency 1 \
+            --no-progress
 
 ONBUILD COPY . /app/

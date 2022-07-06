@@ -8,16 +8,12 @@ ONBUILD WORKDIR /app
 ONBUILD COPY --from=0 /app /app
 
 ONBUILD RUN (rm .env*|| true) && grep -R "process.env." src| \
-        sed 's/^.*\(process.env.[a-zA-Z_0-9]*\).*$/\1/'| \
-        egrep -v 'PUBLIC_URL'| \
-        sort|uniq| \
-        awk -F '.' '{print $3"=\"${"$3"}\""}'| \
-        tee .env.template >/dev/null
-
-ONBUILD RUN export $(grep -v '^#' .env.template | xargs) && yarn run react-scripts build && \
-            grep -R "process.env." src|sed 's/^.*\(process.env.[a-zA-Z_0-9]*\).*$/\1/'| \
-            egrep -v 'PUBLIC_URL'| \
-            sort|uniq|awk -F '.' '{print "$"$3","}'|xargs|sed "s/ //g" | tee .env.list >/dev/null
+       sed 's/^.*\(process.env.[a-zA-Z_0-9]*\).*$/\1/'| \
+       egrep -v 'PUBLIC_URL'| \
+       sort|uniq| \
+       awk -F '.' '{print $3"=\"\${"$3"}\""}'| tee .env >/dev/null && \
+       yarn run react-scripts build && rm .env
 
 #need define ENV CHUNK_FOLDER /app/build/static/js/*.js where path is nginx public location containing js files builded
 COPY envsubst-react-environment.sh /envsubst-react-environment.sh
+COPY chunk-replacer.sh /chunk-replacer.sh
