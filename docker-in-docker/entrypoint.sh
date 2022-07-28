@@ -49,7 +49,7 @@ else
   # `/proc/<pid>/cgroup` is not affected by the bind mount. The
   # following is a workaround to recreate the original cgroup
   # environment by doing another bind mount for each subsystem.
-  CURRENT_CGROUP=$(grep systemd /proc/self/cgroup | cut -d: -f3)
+  CURRENT_CGROUP=$(grep systemd /proc/self/cgroup | cut -d: -f3 || true)
   CGROUP_SUBSYSTEMS=$(findmnt -lun -o source,target -t cgroup | grep "${CURRENT_CGROUP}" | awk '{print $2}')
 
   echo "${CGROUP_SUBSYSTEMS}" |
