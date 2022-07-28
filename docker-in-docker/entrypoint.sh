@@ -50,7 +50,7 @@ else
   # following is a workaround to recreate the original cgroup
   # environment by doing another bind mount for each subsystem.
   CURRENT_CGROUP=$(grep systemd /proc/self/cgroup | cut -d: -f3 || true)
-  CGROUP_SUBSYSTEMS=$(findmnt -lun -o source,target -t cgroup | grep "${CURRENT_CGROUP}" | awk '{print $2}'|| true)
+  CGROUP_SUBSYSTEMS=$(findmnt -lun -o source,target -t cgroup | grep "${CURRENT_CGROUP}" | awk '{print $2}'|| echo "/sys/fs/cgroup/systemd")
 
   echo "${CGROUP_SUBSYSTEMS}" |
   while IFS= read -r SUBSYSTEM; do
