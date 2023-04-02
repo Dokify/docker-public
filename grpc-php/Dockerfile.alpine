@@ -1,0 +1,24 @@
+#FROM dokify/grpc-php-alpine:0.0.1 as grpc-base
+FROM php:8.2-alpine as grpc-base
+ARG GRPC_RELEASE=v1.53.0
+
+RUN apk --update upgrade && apk add --no-cache \
+  autoconf automake curl git libtool \
+  unzip zlib-dev make gcc g++ cmake alpine-sdk musl-dev
+
+ARG MAKEFLAGS=-j8
+
+WORKDIR /github/grpc
+
+RUN git clone --depth 1 --branch ${GRPC_RELEASE} https://github.com/grpc/grpc \
+    && cd grpc && git submodule update --init \
+    && mkdir -p cmake/build \
+    && cd cmake/build \
+    && cmake ../.. \
+    && make protoc grpc_php_plugin
+
+FROM alpine:3.17
+
+COPY --from=grpc-base /github/grpc/grpc/cmake/build/grpc_php_plugin /usr/local/bin/protoc-gen-grpc
+
+RUN apk --no-cache add  musl-dev libstdc++
