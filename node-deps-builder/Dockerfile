@@ -1,9 +1,9 @@
-ARG NODE_VERSION=${NODE_VERSION:-16}
+ARG NODE_VERSION=${NODE_VERSION:-18}
 FROM node:${NODE_VERSION}-slim
 
 ONBUILD WORKDIR /app
 
-ONBUILD RUN apt-get update && apt-get install -y build-essential python git && npm install --location=global npm node-gyp && \
+ONBUILD RUN apt-get update && apt-get install -y build-essential python3 git && npm install --location=global npm node-gyp && \
             apt-get -y clean && \
             apt-get clean autoclean && \
             apt-get autoremove --yes && \

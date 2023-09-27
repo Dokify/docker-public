@@ -3,7 +3,7 @@ VERSION ?= $(shell cat VERSION)
 IMG_REPO ?= dokify
 IMG_TAG ?= $(VERSION)
 IMG_NAME ?= react-envsubst-builder
-NODE_VERSION := 16
+NODE_VERSION := 18
 
 default: image
 
