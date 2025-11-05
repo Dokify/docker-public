@@ -1,13 +1,16 @@
 ARG NODE_VERSION=${NODE_VERSION:-18}
-FROM node:${NODE_VERSION}-slim
+FROM node:${NODE_VERSION}-bookworm-slim
 
 ONBUILD WORKDIR /app
 
-ONBUILD RUN apt-get update && apt-get install -y build-essential python3 git && npm install --location=global npm node-gyp && \
+ONBUILD RUN apt-get update && apt-get install -y --no-install-recommends build-essential python3 git && npm install --location=global npm node-gyp && \
             apt-get -y clean && \
             apt-get clean autoclean && \
             apt-get autoremove --yes && \
             rm -rf /var/lib/{apt,dpkg,cache,log}
+
+# Habilitar corepack para disponer de 'yarn' en Node 18+
+ONBUILD RUN corepack enable
 
 ONBUILD COPY package.json *package-lock.json *.npmrc yarn.lock *.nvmrc ./
 
